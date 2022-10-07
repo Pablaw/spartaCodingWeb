@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+        h1 {
+            font-family: 'Nanum Brush Script', cursive;
+        }
+        .myTitle {
+            width: 100%;
+            height: 250px;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://raw.githubusercontent.com/pablaw/RemoteStorag/main/sparta/tot_desk.png');
+            background-position: center;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            max-width: 500px;
+            width: 95%;
+            margin: 20px auto 0 auto;
+        }
+        .myPost {
+            max-width: 500px;
+            width: 95%;
+            margin: 20px auto 0 auto;
+
+            box-shadow: 0 0 3px 0;
+            padding: 20px;
+        }
+        .btnGroup {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+
+        $(document).ready(
+            //서울 기온 API 호출
+            function () {
+                $.ajax({
+                    type: "GET",
+                    url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
+                    data: {},
+                    success: function (response) {
+                        let temp_seoul = response['temp'];
+                    $('#temp_seoul').text(temp_seoul);
+                    }
+                });
+                //제주 기온 API 호출
+                $.ajax({
+                    type: "GET",
+                    url: "http://spartacodingclub.shop/sparta_api/weather/jeju",
+                    data: {},
+                    success: function (response) {
+                        let temp_jeju = response['temp'];
+                    $('#temp_jeju').text(temp_jeju);
+                    }
+                });
+            });
+    </script>
+</head>
+<body>
+    <div class="myTitle">
+        <h1 style="font-size: 50px" >Tottenham HotSpurs</h1>
+        <p>현재기온 - 서울: <span id="temp_seoul" >00.0</span>℃ /
+                    제주: <span id="temp_jeju" >00.0</span>℃
+        </p>
+    </div>
+
+    <div class="myPost">
+        <div class="form-floating mb-3">
+            <input class="form-control" id="floatingInput" placeholder="name@example.com" type="email">
+            <label for="floatingInput">닉네임</label>
+        </div>
+
+        <div class="form-floating">
+            <textarea class="form-control" id="floatingTextarea" placeholder="Leave a comment here"></textarea>
+            <label for="floatingTextarea">응원댓글</label>
+        </div>
+
+        <div class="btnGroup">
+            <button class="btn btn-dark" type="button">응원 남기기</button>
+        </div>
+    </div>
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>COYS ! Tottenham !</p>
+                    <footer class="blockquote-footer">Spurs King</footer>
+                </blockquote>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Come on Your Spurs, COYS !</p>
+                    <footer class="blockquote-footer">King of London</footer>
+                </blockquote>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Nice one Sonny, Let's have another One !</p>
+                    <footer class="blockquote-footer">Sonshine</footer>
+                </blockquote>
+            </div>
+        </div>
+</body>
+</html>
