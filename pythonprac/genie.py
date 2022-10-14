@@ -24,24 +24,20 @@ songs = soup.select('#body-content > div.newest-list > div > table > tbody > tr'
 #body-content > div.newest-list > div > table > tbody > tr:nth-child(2) > td.info > a.artist.ellipsis
 
 # 가져온 목록을 하나하나 출력하기.
-# for song in songs:
-#     rank = song.select_one('td.number').text[0:2].strip()
-#
-#     title = song.select_one('td.info > a.title.ellipsis')
-#
-#     singer = song.select_one('td.info > a.artist.ellipsis').text
-#     # 단순 span 태그 제거 방법
-#     # title = song.select_one('td.info > a.title.ellipsis').text.strip().strip('19금').strip()
-#     # extract() 명령어 사용으로 정리하는 방법
-#     if title.span != None:
-#         input_title = title.span.extract().text, title.text.strip()
-#         doc = {'rank': rank, 'title': input_title, 'singer': singer}
-#         db.geniemusic.insert_one(doc)
-#     else:
-#         print(title.text.strip())
-#         doc = {'rank': rank, 'title': title.text.strip(), 'singer': singer}
-#         db.geniemusic.insert_one(doc)
+for song in songs:
+    rank = song.select_one('td.number').text[0:2].strip()
 
-print(len(songs))
+    title = song.select_one('td.info > a.title.ellipsis')
 
-
+    singer = song.select_one('td.info > a.artist.ellipsis').text
+    # 단순 span 태그 제거 방법
+    # title = song.select_one('td.info > a.title.ellipsis').text.strip().strip('19금').strip()
+    # extract() 명령어 사용으로 정리하는 방법
+    if title.span != None:
+        input_title = title.span.extract().text, title.text.strip()
+        doc = {'rank': rank, 'title': input_title, 'singer': singer}
+        db.geniemusic.insert_one(doc)
+    else:
+        print(title.text.strip())
+        doc = {'rank': rank, 'title': title.text.strip(), 'singer': singer}
+        db.geniemusic.insert_one(doc)
