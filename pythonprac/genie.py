@@ -6,6 +6,10 @@ data = requests.get('https://www.genie.co.kr/chart/top200?ditc=M&rtm=N&ymd=20210
 
 soup = BeautifulSoup(data.text, 'html.parser')
 
+from pymongo import MongoClient
+client = MongoClient('mongodb+srv://pablaw:9dlrhd!357@cluster0.spvewgv.mongodb.net/?retryWrites=true&w=majority')
+db = client.dbsparta
+
 # 전체 목록을 가져오기.
 songs = soup.select('#body-content > div.newest-list > div > table > tbody > tr')
 
@@ -20,16 +24,24 @@ songs = soup.select('#body-content > div.newest-list > div > table > tbody > tr'
 #body-content > div.newest-list > div > table > tbody > tr:nth-child(2) > td.info > a.artist.ellipsis
 
 # 가져온 목록을 하나하나 출력하기.
-for song in songs:
-    rank = song.select_one('td.number').text[0:2].strip()
+# for song in songs:
+#     rank = song.select_one('td.number').text[0:2].strip()
+#
+#     title = song.select_one('td.info > a.title.ellipsis')
+#
+#     singer = song.select_one('td.info > a.artist.ellipsis').text
+#     # 단순 span 태그 제거 방법
+#     # title = song.select_one('td.info > a.title.ellipsis').text.strip().strip('19금').strip()
+#     # extract() 명령어 사용으로 정리하는 방법
+#     if title.span != None:
+#         input_title = title.span.extract().text, title.text.strip()
+#         doc = {'rank': rank, 'title': input_title, 'singer': singer}
+#         db.geniemusic.insert_one(doc)
+#     else:
+#         print(title.text.strip())
+#         doc = {'rank': rank, 'title': title.text.strip(), 'singer': singer}
+#         db.geniemusic.insert_one(doc)
 
-    title = song.select_one('td.info > a.title.ellipsis')
-    # 단순 span 태그 제거 방법
-    # title = song.select_one('td.info > a.title.ellipsis').text.strip().strip('19금').strip()
-    # extract() 명령어 사용으로 정리하는 방법
-    if title.span != None:
-        print(title.span.extract().text, title.text.strip())
-    else:
-        print(title.text.strip())
+print(len(songs))
 
-    singer = song.select_one('td.info > a.artist.ellipsis').text
+
