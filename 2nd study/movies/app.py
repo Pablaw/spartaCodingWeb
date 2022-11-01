@@ -5,6 +5,9 @@ from pymongo import MongoClient
 client = MongoClient('mongodb+srv://pablaw:9dlrhd!357@cluster0.spvewgv.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
+import requests
+from bs4 import BeautifulSoup
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -15,22 +18,14 @@ def movie_post():
     star_receive = request.form['star_give']
     comment_receive = request.form['comment_give']
 
-    import requests
-    from bs4 import BeautifulSoup
-
-    url = url_receive
-
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    data = requests.get(url, headers=headers)
-
+    data = requests.get(url_receive, headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
 
     title = soup.select_one('meta[property="og:title"]')['content']
     image = soup.select_one('meta[property="og:image"]')['content']
     desc = soup.select_one('meta[property="og:description"]')['content']
-
-
 
     doc = {
         'image': image,
