@@ -54,11 +54,45 @@
         .card{
             margin-top: 20px;
         }
+        .weatherImgGroup{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
     </style>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
+                data: {},
+                success: function (response) {
+                    console.log(response);
+                        $('#temp_seoul').text(response['temp']);
+                        $('#weatherIcon_seoul').attr('src', response['icon']);
+                        }
+            })
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/weather/jeju",
+                data: {},
+                success: function (response) {
+                        console.log(response);
+                        $('#temp_jeju').text(response['temp']);
+                        $('#weatherIcon_jeju').attr('src', response['icon']);
+                        }
+            })
+        });
+    </script>
 </head>
 <body>
 <div class="titleSesction">
     <h1>Homework 팬명록 만들기</h1>
+    <p>서울 현재 기온: <span id="temp_seoul">00.0</span>℃
+        &nbsp / &nbsp 제주 현재 기온:<span id="temp_jeju">00.0</span>℃</p>
+    <div class="weatherImgGroup">
+        <p>서울: <image id="weatherIcon_seoul" src=""></image></p>
+        <p>제주: <image id="weatherIcon_jeju" src=""></image></p>
+    </div>
 </div>
 <div class="post">
     <div class="form-floating mb-3">

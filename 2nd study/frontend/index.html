@@ -50,6 +50,7 @@ crossorigin="anonymous"></script>
         margin: 20px auto 0 auto;
         box-shadow: 0px 0px 3px 0px gray;
         padding: 20px;
+        display: none;
     }
     .wrap{
         max-width: 1200px;
@@ -76,12 +77,56 @@ crossorigin="anonymous"></script>
     }
 </style>
 <script>
+    /* JQuery 함수 실행문
     $(function loaded() {
 
     })
     $(document).ready(function () {
         loaded();
     });
+    --------- */
+    function listing() {
+        $('#cardGroup').empty();
+        $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/web/api/movie",
+                data: {},
+                success: function (response) {
+                        let rows = response['movies'];
+                        for (let i=0; i < rows.length; i++){
+                            let image = rows[i]['image'];
+                            let title = rows[i]['title'];
+                            let desc = rows[i]['desc'];
+                            let starCnt = rows[i]['star'];
+                            let star = '⭐'.repeat(starCnt);
+                            let comment = rows[i]['comment'];
+                            console.log(typeof title);
+                            let temp_html = `<div class="col">
+                                                <div class="card">
+                                                    <img alt=${title.concat('_image')} class="card-img-top"
+                                                         src=${image}>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${title}</h5>
+                                                        <p class="card-text">${desc}</p>
+                                                        <p>${star}️</p>
+                                                        <p class="comment">${comment}</p>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                            $('#cardGroup').append(temp_html);
+                        }
+                        }
+            })
+    }
+    $(document).ready(function () {
+        listing();
+    });
+    function open_box () {
+        $('#post_box').show();
+    }
+    function close_box () {
+        $('#post_box').hide();
+    }
 </script>
 
 </head>
@@ -89,16 +134,16 @@ crossorigin="anonymous"></script>
 <body>
 <div class="titleSesction">
     <h1>내 생애 최고의 영화들</h1>
-    <button>영화 기록하기</button>
+    <button onclick="open_box()">영화 기록하기</button>
 </div>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>영화 후기 코멘트!</strong> 기록을 남기고 싶은 영화를 선택하고 코멘트를 남겨주세요!
     <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
 </div>
-<div class="post">
+<div id="post_box" class="post">
     <div class="form-floating mb-3">
-        <input class="form-control" id="floatingInput" placeholder="/" type="url">
-        <label for="floatingInput">영화 URL</label>
+        <input class="form-control" id="url" placeholder="/" type="url">
+        <label for="url">영화 URL</label>
     </div>
     <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">별점</label>
@@ -117,11 +162,11 @@ crossorigin="anonymous"></script>
     </div>
     <div class="btnGroup">
         <button type="button" class="btn btn-dark">기록하기</button>
-        <button type="button" class="btn btn-outline-dark">닫기</button>
+        <button type="button" onclick="close_box()" class="btn btn-outline-dark">닫기</button>
     </div>
 </div>
 <div class="wrap">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div id="cardGroup" class="row row-cols-1 row-cols-md-4 g-4">
         <div class="col">
             <div class="card">
                 <img alt="..." class="card-img-top"
