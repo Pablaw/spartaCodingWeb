@@ -93,29 +93,51 @@
                 url: "/bucket",
                 data: {},
                 success: function (response) {
-                    alert(response["msg"])
+                    let rows = response["result"];
+                    for(let i=0; i < rows.length; i++) {
+                        let num = rows[i]['num'];
+                        let bucket = rows[i]['bucket'];
+                        let done = rows[i]['done'];
+
+                        let temp_html = ``;
+                        if (done == 0) {
+                            temp_html = `<li>
+                                            <h2>✅ ${bucket}</h2>
+                                            <button class="btn btn-outline-primary" onclick="done_bucket(${num})" type="button">완료!</button>
+                                        </li>`;
+                        } else {
+                            temp_html = `<li>
+                                            <h2 class="done">✅ ${bucket}</h2>
+                                        </li>`;
+                        }
+                        $('#bucket-list').append(temp_html);
+                    }
                 }
             });
         }
 
         function save_bucket() {
+            let bucket = $('#bucket').val();
             $.ajax({
                 type: "POST",
                 url: "/bucket",
-                data: {sameple_give: '데이터전송'},
+                data: {give_bucket: bucket},
                 success: function (response) {
                     alert(response["msg"])
+                    window.location.reload();
                 }
             });
         }
 
         function done_bucket(num) {
+            console.log(num);
             $.ajax({
                 type: "POST",
                 url: "/bucket/done",
-                data: {sameple_give: '데이터전송'},
+                data: {num_give: num},
                 success: function (response) {
                     alert(response["msg"])
+                    window.location.reload();
                 }
             });
         }
