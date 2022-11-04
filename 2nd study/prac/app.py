@@ -7,9 +7,8 @@ def home():
 
 @app.route('/test', methods=['GET'])
 def test_get():
-   title_receive = request.args.get('title_give')
-   print(title_receive)
-   return jsonify({'result':'success', 'msg': '이 요청은 GET!'})
+   msg_receive = request.args.get('msg_give')
+   return jsonify({'msg': msg_receive})
 
 @app.route('/test', methods=['POST'])
 def test_post():

@@ -20,15 +20,17 @@ def web_mars_post():
         'address': address_receive,
         'size': size_receive
     }
-    db.mars2.insert_one(doc)
+    db.mars3.insert_one(doc)
 
     return jsonify({'msg': '등록되었습니다!'})
 
 
 @app.route("/mars", methods=["GET"])
 def web_mars_get():
-    order_list = list(db.mars2.find({}, {'_id': False}))
-    return jsonify({'orders': order_list})
+
+    order_list = list(db.mars3.find({}, {'_id': False}))
+
+    return jsonify({'result': order_list})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=3000, debug=True)

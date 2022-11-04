@@ -57,41 +57,45 @@
         });
 
         function show_order() {
-            $('#contents').empty();
+
             $.ajax({
                 type: 'GET',
                 url: '/mars',
                 data: {},
                 success: function (response) {
-                    let rows = response['orders'];
-                    for(let i=0; i < rows.length; i++) {
-                        let name = rows[i]['name']
-                        let address = rows[i]['address']
-                        let size = rows[i]['size']
+                    let rows = response['result']
+
+                    for(let i=0; i < rows.length; i++){
+                        let name = rows[i]['name'];
+                        let address = rows[i]['address'];
+                        let size = rows[i]['size'];
 
                         let temp_html = `<tr>
                                             <td>${name}</td>
                                             <td>${address}</td>
                                             <td>${size}</td>
-                                        </tr>`
-                        $('#order-box').append(temp_html);
+                                        </tr>`;
+                        $('#post-box').append(temp_html);
                     }
-
-                }
+                    }
             });
         }
-
         function save_order() {
+            let name = $('#name').val();
+            let address = $('#address').val();
+            let size = $('#size').val();
+
             $.ajax({
                 type: 'POST',
                 url: '/mars',
-                data: {name_give: $('#name').val(),
-                        address_give: $('#address').val(),
-                        size_give: $('#size').val()
+                data: {
+                    name_give: name,
+                    address_give: address ,
+                    size_give: size
                 },
                 success: function (response) {
-                    alert(response['msg'])
-                    window.location.reload()
+                    console.log(response['msg']);
+                    window.location.reload();
                 }
             });
         }
@@ -136,7 +140,7 @@
             <th scope="col">평수</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="post-box">
         <tr>
             <td>홍길동</td>
             <td>서울시 용산구</td>

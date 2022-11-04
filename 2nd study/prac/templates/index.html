@@ -9,6 +9,19 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        $(document).ready(function () {
+            testGet ();
+        });
+        function testGet () {
+            $.ajax({
+                type: "GET",
+                url: "/test?msg_give=GET msg_give전달",
+                data: {},
+                success: function (response) {
+                    alert(response['msg'])
+                }
+            })
+        }
         function hey() {
             $.ajax({
                 type: "POST",
